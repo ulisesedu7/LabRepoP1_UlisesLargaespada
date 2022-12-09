@@ -250,28 +250,43 @@ public class LabRepoP1_UlisesLargaespada {
   // Funcion para correr los juegos e ir imprimiendo los valores
   public static void jugarImprimirTablero(int jugadorInicial, String[][] tablero) {
     // Coordenadas solicitadas a los jugadores
-    int[] coordenadaJugador1;
+    int[] coordenadaJugador1 = new int[2];
+    int[] coordenadaJugador1Mov = new int[2];
     int[] coordenadaJugador2;
+    int[] coordenadaJugador2Mov;
 
     // Variables    
     String player1;
     String player2;
     boolean check = true;
-    boolean checkPieza = true;
+    boolean checkPiezaSelect = true;
+    boolean checkPiezaMove = true;
 
     // Mostrar tablero para empezar
     System.out.println("Este es el tablero inicialmente!");
     mostrarTablero(tablero);
 
     System.out.println("Jugador, indique la coordenada de la pieza que desea mover");
-    do {
+    while (checkPiezaSelect) {
       coordenadaJugador1 = solicitarValidar(tablero);
 
-      checkPieza = checkForPieza(coordenadaJugador1, tablero, jugadorInicial);
+      checkPiezaSelect = checkForPieza(coordenadaJugador1, tablero, jugadorInicial);
 
-    } while (checkPieza);
+    }
 
     System.out.println("Ahora indique la coordenada a la que movera su pieza: ");
+    
+    while (checkPiezaMove) {
+      coordenadaJugador1Mov = solicitarValidar(tablero);
+
+      checkPiezaMove = checkForPiezaMove(coordenadaJugador1, coordenadaJugador1Mov, tablero, jugadorInicial);
+
+    }
+    
+    // Llamar funcion para actualizar tablero
+    tablero = actualizarTablero(coordenadaJugador1, coordenadaJugador1Mov, tablero);
+    
+    // Llamar funcion para checkear si con ese movimiento se gano o perdio el juego, que deberia de llamar constantemente luego de cada movimiento
 
     System.out.println();
   }
@@ -327,6 +342,32 @@ public class LabRepoP1_UlisesLargaespada {
 
   return check ;
 }
+  
+  // Validar que la posicion a mover la pieza este libre y sea dentro de las reglas horizontal o vertidal
+  public static boolean checkForPiezaMove(int[] coordenadaOriginal, int[] coordenadaMove, String[][] tablero, int jugadorInicial) {
+    boolean check = true;
+    
+    int rowMoveOriginal = coordenadaOriginal[0];
+    int colMoveOriginal = coordenadaOriginal[1];
+    
+    int rowMoveDestino = coordenadaOriginal[0];
+    int colMoveDestino = coordenadaOriginal[1];
+    
+    // Mover pieza si el trablero esta vacio
+    if (tablero[rowMoveDestino][colMoveDestino].equals(" ")) {
+      System.out.println("Espacio libre, su pieza ha sido movida!");
+      check = false;
+    }
+
+    return check;
+  }
+  
+  // Funcion para actualizar tablero
+  public static String[][] actualizarTablero(int[] coordenadaPieza, int[] coordenadaDestino, String[][] tablero) {
+    String[][] tableroActualizado = null;
+    
+    return tableroActualizado;
+  }
 
 /*
     Abajo de aqui estan todas las funciones para la funcionalidad
